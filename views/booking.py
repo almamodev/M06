@@ -7,10 +7,10 @@ from flask.views import MethodView
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
-blp = Blueprint('bookings', __name__)
+blp = Blueprint('booking', __name__)
 
 
-@blp.route('/bookings')
+@blp.route('/booking')
 class BookingView(MethodView):
     @jwt_required()
     @blp.response(200, BookingSchema(many=True))

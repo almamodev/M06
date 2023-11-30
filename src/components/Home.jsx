@@ -1,10 +1,10 @@
 import { useEffect } from "react"
-import Flights from "./Flights"
+import Flight from "./Flight"
 
 export default function Home() {
     return (
         <>
-            <Flights />
+            <Flight />
         </>
     )
 }

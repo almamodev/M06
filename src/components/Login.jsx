@@ -2,31 +2,30 @@ import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
-    const [form, setForm] = useState({username: '', password: ''});
+    const [user, setUser] = useState({username: '', password: ''});
     const navigate = useNavigate();
 
     const handleChange = (event) => {
-        setForm({...form, [event.target.name]: event.target.value});
+        setUser({...user, [event.target.name]: event.target.value});
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-        try {
-            const response = await fetch('http://127.0.0.1:5000/login', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({username: form.username, password: form.password})
-            });
-            const data = await response.json();
-            if (response.ok) {
-                localStorage.setItem('token', data.token);
+        
+        fetch('http://127.0.0.1:5000/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({username: form.username, password: form.password})
+        })
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+                return response.json(); 
+            })
+            .then(data => {
+                localStorage.setItem('token', JSON.stringify(data.token));
                 navigate('/home');
-            } else {
-                throw new Error(data.status);
-            }
-        } catch(error) {
-            console.error(error.message);
-        }
+            })
+            .catch(error => console.error(error.message));
     }
 
     return (

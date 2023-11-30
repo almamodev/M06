@@ -2,32 +2,26 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-    const [form, setForm] = useState({username: '', password: ''});
+    const [user, setUser] = useState({username: '', password: ''});
     const navigate = useNavigate();
 
     const handleChange = (event) => {
-        setForm({...form, [event.target.name]: event.target.value});
+        setUser({...user, [event.target.name]: event.target.value});
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        try {
-            const response = await fetch('http://127.0.0.1:5000/register', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({username: form.username, password: form.password})
-            });
-            const data = await response.json();
-            if (response.status === 201) {
+        fetch('http://127.0.0.1:5000/register', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({username: form.username, password: form.password})
+        })
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
                 navigate('/');
-            } else {
-                throw new Error(data.status);
-            }
-        } catch(error) {
-            console.error(error.message);
-        }
-
+            })
+            .catch(error => console.error(error.message));
     }
 
     return (

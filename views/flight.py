@@ -4,10 +4,10 @@ from schemas.flight import FlightSchema
 from flask.views import MethodView
 
 
-blp = Blueprint('flights', __name__)
+blp = Blueprint('flight', __name__)
 
 
-@blp.route('/flights')
+@blp.route('/flight')
 class FlightView(MethodView):
     @blp.response(200, FlightSchema(many=True))
     def get(self):

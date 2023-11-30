@@ -2,7 +2,7 @@ from db import db
 
 
 class BookingModel(db.Model):
-    __tablename__ = 'bookings'
+    __tablename__ = 'booking'
     id = db.Column(db.Integer, primary_key=True)
-    user = db.Column(db.Integer, db.ForeignKey('users.id', name='user'), nullable=False)
-    flight = db.Column(db.Integer, db.ForeignKey('flights.id', name='flight'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='user_id'), nullable=False)
+    flight_id = db.Column(db.Integer, db.ForeignKey('flight.id', name='flight_id'), nullable=False)

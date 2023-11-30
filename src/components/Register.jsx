@@ -15,7 +15,7 @@ export default function Register() {
         fetch('http://127.0.0.1:5000/register', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({username: form.username, password: form.password})
+            body: JSON.stringify({username: user.username, password: user.password})
         })
             .then(response => {
                 if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
@@ -26,14 +26,14 @@ export default function Register() {
 
     return (
         <>
-            <div className="flex justify-center items-center h-screen bg-slate-200">
+            <div className="flex justify-center items-center h-screen">
                 <div className="rounded-md shadow-2xl p-12 bg-white ">
                     <div className="text-center text-2xl mb-8 font-bold border-b p-2">Register</div>
                     <form onSubmit={handleSubmit}>
                         <input 
                             type="text"
                             name="username"
-                            value={form.username}
+                            value={user.username}
                             onChange={handleChange}
                             placeholder="Username"
                             className="block border-2 p-2 rounded-md mb-4 text-center bg-slate-100"
@@ -41,7 +41,7 @@ export default function Register() {
                         <input 
                             type="password"
                             name="password"
-                            value={form.password}
+                            value={user.password}
                             onChange={handleChange}
                             placeholder="Password"
                             className="block border-2 p-2 rounded-md mb-8 text-center bg-slate-100"

@@ -15,18 +15,31 @@ export default function Flight() {
             .then(data => setFlight(data))
             .catch(error => console.error(error.message));
     }, []);
+
+    const option = flight.map((value, index) => (
+        <option key={index} value={value.id}>
+            {value.city}
+        </option>
+    ));
+
     return (
         <>
-            <form>
-                <div>Flight</div>
-                <select>
-                    {flight.map((value, index) => (
-                        <option key={index} value={value.id}>
-                            
-                        </option>
-                    ))}
-                </select>
-            </form>
+            <div className="flex justify-center items-center">
+                <div className="bg-white p-12 shadow-2xl rounded-md">
+                    <form>
+                        <div className="flex flex-col sm:flex-row">
+                            <div className="font-bold text-2xl text-center">Origin</div>
+                            <select className="">
+                                {option}
+                            </select>
+                            <div className="font-bold text-2xl text-center">Destination</div>
+                            <select>
+                                {option}
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </>
     )
 }

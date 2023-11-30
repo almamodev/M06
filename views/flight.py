@@ -12,3 +12,5 @@ class FlightView(MethodView):
     @blp.response(200, FlightSchema(many=True))
     def get(self):
         return FlightModel.query.all()
+
+

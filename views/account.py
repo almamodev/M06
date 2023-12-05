@@ -17,7 +17,7 @@ class LoginView(MethodView):
     def post(self, payload):
         user = UserModel.query.filter(UserModel.username == payload['username']).first()
         if user and pbkdf2_sha256.verify(payload['password'], user.password):
-            return {'token': create_access_token(identity=user.id, fresh=True)}
+            return create_access_token(identity=user.id, fresh=True)
         else:
             abort(401)
 
@@ -31,6 +31,6 @@ class RegisterView(MethodView):
             abort(409)
         else:
             user = UserModel(username=payload['username'], password=pbkdf2_sha256.hash(payload['password']))
-        db.session.add(user)
-        db.session.commit()
+            db.session.add(user)
+            db.session.commit()
 

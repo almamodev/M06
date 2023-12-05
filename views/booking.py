@@ -15,16 +15,17 @@ class BookingView(MethodView):
     @jwt_required()
     @blp.response(200, BookingSchema(many=True))
     def get(self):
-        return BookingModel.query.filter(BookingModel.user == get_jwt_identity()).all()
-    
+        return BookingModel.query.all()
+
 
     @jwt_required()
     @blp.arguments(BookingSchema)
-    @blp.response(201)
+    @blp.response(201, BookingSchema)
     def post(self, payload):
-        booking = BookingModel(user=get_jwt_identity(), flight=payload['flight'])
+        booking = BookingModel(**payload)
         try:
             db.session.add(booking)
             db.session.commit()
+            return booking
         except SQLAlchemyError:
             abort(500)

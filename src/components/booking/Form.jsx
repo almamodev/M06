@@ -59,11 +59,13 @@ export default function Form({ setBooking, setError }) {
         }
     }
 
-    const option = flight.map(value => (
-        <option key={value.id} value={value.city}>
-            {value.city}
-        </option>
-    ));
+    const option = (start, end) => {
+        return flight.slice(start, end).map(value => (
+            <option key={value.id} value={value.city}>
+                {value.city}
+            </option>
+        ));
+    }   
 
     return (
         <>
@@ -79,7 +81,7 @@ export default function Form({ setBooking, setError }) {
                                 onChange={handleChange}
                                 name="origin"
                             >
-                                {option}
+                                {option(0, 5)}
                             </select>
                         </div>
                         <div className="text-center">
@@ -90,7 +92,7 @@ export default function Form({ setBooking, setError }) {
                                 onChange={handleChange}
                                 name="destination"
                             >
-                                {option}
+                                {option(5, 10)}
                             </select>
                         </div>
                     </div>
